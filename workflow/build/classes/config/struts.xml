@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+   <constant name="struts.objectFactory" value="spring"></constant>
+   <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+   <constant name="struts.multipart.saveDir" value="/tmp"/>
+   <!-- <include file="config/struts-demo.xml"></include> -->
+   
+	<package name="workflow" namespace="/" extends="json-default">
+		<action name="workflow" class="workflowAction">
+			<result name="main">/main.jsp</result>
+			<result name="toDeploy">/workflowManager/deploy.jsp</result>
+			<result name="success">/success.jsp</result>
+			<result name="workflowMgr">/workflowManager/workflowMgr.jsp</result>
+			<result name="datagrid" type="json">
+				<param name="root">resultObj</param>
+			</result>
+			<result name="result" type="json">
+				<param name="includeProperties">result</param>
+			</result> 
+		</action>
+	</package> 
+	 
+</struts>

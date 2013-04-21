@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<process key="submit" name="submit" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="33,115,48,48" name="start1">
+      <transition g="-54,-38" name="送团队负责人审核" to="团队负责人审核"/>
+   </start>
+   <task assignee="r2" g="159,109,121,55" name="团队负责人审核">
+   		<assignment-handler class="com.demo.util.TaskListener">
+		</assignment-handler>
+      <transition g="-67,-33" name="送风控专员审核" to="风控专员审核"/>
+   </task>
+   <task assignee="r3" g="328,109,124,56" name="风控专员审核">
+   		<assignment-handler class="com.demo.util.TaskListener">
+		</assignment-handler>
+      <transition g="-59,-29" name="to exclusive1" to="exclusive1"/>
+   </task>
+   <task assignee="r4" g="645,250,128,50" name="部门总经理审核">
+   		<assignment-handler class="com.demo.util.TaskListener">
+		</assignment-handler>
+      <transition g="-4,-15" name="送交易员办理" to="交易员办理"/>
+   </task>
+   <task assignee="r5" g="643,11,120,56" name="风控副总审核">
+   		<assignment-handler class="com.demo.util.TaskListener">
+		</assignment-handler>
+      <transition g="-15,-27" name="送交易员办理" to="交易员办理"/>
+   </task>
+   <end g="1044,123,48,48" name="结束">
+   	<on event="start">
+		<event-listener class="com.demo.util.EndListener">
+		</event-listener>
+	</on>
+   </end>
+   <decision expr="${node}" g="524,109,48,48" name="exclusive1">
+      <transition g="-95,-26" name="送风控副总审核" to="风控副总审核"/>
+      <transition g="-103,-16" name="送部门总经理审核" to="部门总经理审核"/>
+   </decision>
+   <task assignee="r6" g="844,119,92,52" name="交易员办理">
+   		<assignment-handler class="com.demo.util.TaskListener">
+		</assignment-handler>
+      <transition name="办结" to="结束" g="-55,-25"/>
+   </task>
+	
+</process>

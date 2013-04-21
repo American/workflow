@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Middle tier application context definition for the image database.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	
+	 <bean id="jbpmSpringHelper" class="org.jbpm.pvm.internal.processengine.SpringHelper"
+		lazy-init="true" autowire="default" dependency-check="default"
+	>
+		<property name="jbpmCfg">
+			<value>jbpm.cfg.xml</value>
+		</property>
+	
+	</bean>
+	
+	<bean id="processEngine" factory-bean="jbpmSpringHelper" factory-method="createProcessEngine"/>
+	
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
+	
+	<bean id="executionService" factory-bean="processEngine" factory-method="getExecutionService"/>
+	
+	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
+	
+	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
+	
+	<bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
+	
+	 <bean id="workflowManagerImpl" class="main.core.bpm.impl.WorkFlowManager">
+		<property name="processEngine" ref="processEngine"/>
+		<property name="repositoryService" ref="repositoryService"/>
+		<property name="executionService" ref="executionService"/>
+		<property name="taskService" ref="taskService"/>
+		<property name="historyService" ref="historyService"/>
+		<property name="identityService" ref="identityService"/>
+	</bean>
+	
+	<bean id="workflowManager" parent="transactionBese">
+		<property name="target" ref="workflowManagerImpl"></property>
+	</bean> 
+	
+	
+	
+</beans>

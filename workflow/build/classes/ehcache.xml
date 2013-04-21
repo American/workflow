@@ -1,0 +1,7 @@
+<ehcache>
+
+    <diskStore path="F:\\视频录制学习\\hibernateStudy\\temp"/>
+
+
+
+</ehcache>
